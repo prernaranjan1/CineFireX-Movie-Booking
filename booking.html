@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Ticket Booking - Select Seats</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/booking.css">
+</head>
+<body>
+  <header>
+    <h1>🎬 Select Your Seats</h1>
+  </header>
+
+  <div class="container">
+    <div class="info-message">
+      Complete your details and select seats to continue
+    </div>
+
+    <form id="bookingForm">
+      <div class="form-section">
+        <h3>Your Details</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customerName">Full Name *</label>
+            <input type="text" id="customerName" placeholder="Enter your name" required>
+            <span class="error-text">Please enter a valid name</span>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" placeholder="10 digit number" pattern="[0-9]{10}" required>
+            <span class="error-text">Please enter a valid 10-digit number</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="movie">Movie *</label>
+            <input type="text" id="movie" readonly>
+          </div>
+          <div class="form-group">
+            <label for="showTime">Show Time *</label>
+            <select id="showTime" required>
+              <option value="">Select a time</option>
+              <option>10:00 AM</option>
+              <option>1:00 PM</option>
+              <option>4:00 PM</option>
+              <option>7:00 PM</option>
+              <option>10:00 PM</option>
+            </select>
+            <span class="error-text">Please select a show time</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen">🎞️ SCREEN THIS WAY 🎞️</div>
+
+      <div class="seats-container">
+        <div class="seat-category">
+          <h4>₹250 • PLATINUM</h4>
+          <div class="seats-rows">
+            <div class="seats-block">
+              <div class="seat">P1</div><div class="seat">P2</div><div class="seat">P3</div>
+              <div class="seat">P4</div><div class="seat">P5</div><div class="seat">P6</div>
+            </div>
+            <div class="seats-block">
+              <div class="seat bestseller">P7</div><div class="seat">P8</div>
+              <div class="seat sold">P9</div><div class="seat">P10</div>
+              <div class="seat">P11</div><div class="seat">P12</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="seat-category">
+          <h4>₹200 • GOLD</h4>
+          <div class="seats-rows">
+            <div class="seats-block">
+              <div class="seat">G1</div><div class="seat">G2</div><div class="seat">G3</div>
+              <div class="seat">G4</div><div class="seat bestseller">G5</div><div class="seat">G6</div>
+            </div>
+            <div class="seats-block">
+              <div class="seat">G7</div><div class="seat">G8</div>
+              <div class="seat sold">G9</div><div class="seat">G10</div>
+              <div class="seat">G11</div><div class="seat">G12</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="seat-category">
+          <h4>₹150 • SILVER</h4>
+          <div class="seats-rows">
+            <div class="seats-block">
+              <div class="seat">S1</div><div class="seat">S2</div><div class="seat">S3</div>
+              <div class="seat">S4</div><div class="seat">S5</div><div class="seat bestseller">S6</div>
+            </div>
+            <div class="seats-block">
+              <div class="seat">S7</div><div class="seat">S8</div>
+              <div class="seat sold">S9</div><div class="seat">S10</div>
+              <div class="seat">S11</div><div class="seat">S12</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="legend">
+          <div class="legend-item">
+            <div class="legend-box available"></div>
+            <span>Available</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-box bestseller"></div>
+            <span>Bestseller</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-box selected"></div>
+            <span>Selected</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-box sold"></div>
+            <span>Sold</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-box">
+        <div class="summary-item">
+          <b>Selected Seats:</b>
+          <span id="seatsDisplay">None</span>
+        </div>
+        <div class="summary-item">
+          <b>Number of Seats:</b>
+          <span id="seatCount">0</span>
+        </div>
+        <div class="total-price">
+          Total: ₹<span id="totalPrice">0</span>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="btn btn-back" onclick="history.back()">Back</button>
+        <button type="submit" class="btn btn-confirm" id="confirmBtn">Proceed to Snacks</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script src="js/booking.js"></script>
+</body>
+</html>

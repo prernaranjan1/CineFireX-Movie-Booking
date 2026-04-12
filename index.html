@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Booking - Home</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+  <header>
+    <h1>🎬 CineFireX</h1>
+    <p>Book your favorite movies easily</p>
+  </header>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#movies">Movies</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section class="banner">
+    Find & Book Your Next Movie Adventure
+  </section>
+
+  <section class="search-section">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search for a movie..." autocomplete="off">
+      <button id="searchBtn">Search</button>
+    </div>
+  </section>
+
+  <section class="filters">
+    <button class="filter-btn active" onclick="HOME.filterByGenre('')">All Movies</button>
+    <button class="filter-btn" onclick="HOME.filterByGenre('Action')">Action</button>
+    <button class="filter-btn" onclick="HOME.filterByGenre('Drama')">Drama</button>
+    <button class="filter-btn" onclick="HOME.filterByGenre('Comedy')">Comedy</button>
+  </section>
+
+  <section class="movies-section">
+    <div class="movies-grid" id="movies">
+      <div class="loading">
+        <div class="spinner"></div>
+        Loading movies...
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 CineFireX Movie Booking System. All rights reserved.
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>
