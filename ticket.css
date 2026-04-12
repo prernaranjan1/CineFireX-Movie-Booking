@@ -1,0 +1,347 @@
+/* ============================================
+   TICKET PAGE STYLES
+   ============================================ */
+
+body {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: var(--text-primary);
+}
+
+/* Page Container */
+.page-container {
+  width: 100%;
+  max-width: 550px;
+}
+
+/* Success Banner */
+.success-banner {
+  background: white;
+  border-radius: 12px 12px 0 0;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0;
+}
+
+.success-icon {
+  font-size: 60px;
+  margin-bottom: 15px;
+  animation: bounce 0.6s ease-in-out;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.success-message h2 {
+  font-size: 26px;
+  color: var(--primary-color);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.success-message p {
+  color: var(--text-light);
+  font-size: 14px;
+  margin-bottom: 20px;
+  margin: 0;
+}
+
+/* Ticket */
+.ticket {
+  background: white;
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+}
+
+/* Ticket Header */
+.ticket-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+  padding: 25px 20px;
+  text-align: center;
+}
+
+.ticket-header h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.ticket-subtitle {
+  font-size: 13px;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Ticket Body */
+.ticket-body {
+  padding: 25px;
+}
+
+.ticket-section {
+  margin-bottom: 20px;
+}
+
+.ticket-section-title {
+  font-size: 12px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.ticket-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ticket-row:last-child {
+  border-bottom: none;
+}
+
+.ticket-label {
+  color: var(--text-light);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.ticket-value {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* Barcode Section */
+.barcode-section {
+  text-align: center;
+  padding: 25px;
+  background: #f9f9f9;
+  border-top: 2px dashed var(--border-color);
+  border-bottom: 2px dashed var(--border-color);
+  margin: 20px 0;
+}
+
+.barcode-label {
+  font-size: 11px;
+  color: var(--text-light);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.barcode {
+  font-size: 36px;
+  letter-spacing: 6px;
+  color: var(--text-primary);
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 8px;
+}
+
+.booking-id {
+  font-size: 12px;
+  color: var(--text-light);
+  font-family: 'Courier New', monospace;
+}
+
+/* Ticket Footer */
+.ticket-footer {
+  background: #f9f9f9;
+  padding: 15px;
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+/* Instructions */
+.instructions {
+  background: #e3f2fd;
+  color: var(--info-color);
+  padding: 15px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  border-left: 4px solid var(--info-color);
+}
+
+.instructions p {
+  margin: 5px 0;
+  color: var(--info-color);
+}
+
+/* Button Group */
+.button-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn {
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-print {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+}
+
+.btn-print:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-home {
+  background: white;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.btn-home:hover {
+  background: #f0f0f0;
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+    padding: 0;
+  }
+
+  .success-banner,
+  .instructions,
+  .button-group,
+  .no-print {
+    display: none !important;
+  }
+
+  .ticket {
+    box-shadow: none;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .page-container {
+    max-width: 100%;
+  }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 480px) {
+  .success-message h2 {
+    font-size: 22px;
+  }
+
+  .barcode {
+    font-size: 28px;
+    letter-spacing: 4px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 12px 16px;
+  }
+
+  .ticket-body {
+    padding: 20px;
+  }
+
+  .ticket-header {
+    padding: 20px 15px;
+  }
+
+  .barcode-section {
+    padding: 20px 15px;
+  }
+
+  .ticket-section {
+    margin-bottom: 15px;
+  }
+
+  .ticket-row {
+    padding: 8px 0;
+    margin: 8px 0;
+  }
+
+  .ticket-label,
+  .ticket-value {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 380px) {
+  .success-banner {
+    padding: 20px 15px;
+  }
+
+  .success-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+
+  .success-message h2 {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+
+  .success-message p {
+    font-size: 12px;
+  }
+
+  .ticket-body {
+    padding: 15px;
+  }
+
+  .barcode {
+    font-size: 24px;
+    letter-spacing: 3px;
+  }
+
+  .booking-id {
+    font-size: 11px;
+  }
+
+  .instructions {
+    padding: 12px;
+    font-size: 12px;
+  }
+
+  .instructions p {
+    margin: 4px 0;
+  }
+}
