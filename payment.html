@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - Movie Ticket Booking</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/payment.css">
+</head>
+<body>
+  <div class="payment-container">
+    <header>
+      <h1>💳 Secure Payment</h1>
+      <p>Complete your booking with a safe payment</p>
+    </header>
+
+    <div class="summary-section">
+      <div class="summary-title">Booking Summary</div>
+      <div class="summary-item">
+        <strong>Name:</strong>
+        <span id="nameDisplay"></span>
+      </div>
+      <div class="summary-item">
+        <strong>Movie:</strong>
+        <span id="movieDisplay"></span>
+      </div>
+      <div class="summary-item">
+        <strong>Time:</strong>
+        <span id="timeDisplay"></span>
+      </div>
+      <div class="summary-item">
+        <strong>Seats:</strong>
+        <span id="seatsDisplay"></span>
+      </div>
+      <div class="summary-divider"></div>
+      <div class="summary-item">
+        <strong>Ticket Total:</strong>
+        <span>₹<span id="ticketTotalDisplay">0</span></span>
+      </div>
+      <div class="summary-item">
+        <strong>Snacks Total:</strong>
+        <span>₹<span id="snackTotalDisplay">0</span></span>
+      </div>
+      <div class="summary-item total-amount">
+        <strong>Grand Total:</strong>
+        <span>₹<span id="grandTotalDisplay">0</span></span>
+      </div>
+    </div>
+
+    <div class="security-info">
+      <div class="security-icon">🔒</div>
+      <div>Your payment information is encrypted and secure. We process payments safely.</div>
+    </div>
+
+    <form id="paymentForm">
+      <div class="form-section">
+        <div class="form-title">Cardholder Details</div>
+        <div class="form-group">
+          <label for="cardName">Name on Card *</label>
+          <input type="text" id="cardName" placeholder="Enter name as shown on card" required>
+          <span class="error-message">Please enter a valid name</span>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-title">Card Information</div>
+        <div class="form-group">
+          <label for="cardNumber">Card Number *</label>
+          <input type="text" id="cardNumber" placeholder="16 digit card number" maxlength="16" inputmode="numeric" required>
+          <span class="error-message">Please enter a valid 16-digit card number</span>
+        </div>
+
+        <div class="card-row">
+          <div class="form-group">
+            <label for="expiry">Expiry Date (MM/YY) *</label>
+            <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required>
+            <span class="error-message">Invalid format. Use MM/YY</span>
+          </div>
+          <div class="form-group">
+            <label for="cvv">CVV *</label>
+            <input type="password" id="cvv" placeholder="3 digits" maxlength="3" inputmode="numeric" required>
+            <span class="error-message">CVV must be 3 digits</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="btn btn-cancel" onclick="history.back()">Cancel</button>
+        <button type="submit" class="btn btn-pay" id="payBtn">Pay ₹<span id="payAmount">0</span></button>
+      </div>
+
+      <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <div class="loader-text">Processing Payment...</div>
+      </div>
+    </form>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script src="js/payment.js"></script>
+</body>
+</html>

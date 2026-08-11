@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Movie Ticket</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/ticket.css">
+</head>
+<body>
+  <div class="page-container">
+    <div class="success-banner">
+      <div class="success-icon">✅</div>
+      <div class="success-message">
+        <h2>Booking Confirmed!</h2>
+        <p>Your movie ticket has been booked successfully</p>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-header">
+        <h3>🎬 Movie Ticket</h3>
+        <p class="ticket-subtitle">Your entry pass to an amazing experience</p>
+      </div>
+
+      <div class="ticket-body">
+        <div class="ticket-section">
+          <div class="ticket-section-title">Booking Details</div>
+          <div class="ticket-row">
+            <span class="ticket-label">Booking Name</span>
+            <span class="ticket-value" id="nameDisplay">-</span>
+          </div>
+          <div class="ticket-row">
+            <span class="ticket-label">Movie Title</span>
+            <span class="ticket-value" id="movieDisplay">-</span>
+          </div>
+        </div>
+
+        <div class="ticket-section">
+          <div class="ticket-section-title">Show Information</div>
+          <div class="ticket-row">
+            <span class="ticket-label">Show Time</span>
+            <span class="ticket-value" id="timeDisplay">-</span>
+          </div>
+          <div class="ticket-row">
+            <span class="ticket-label">Seats</span>
+            <span class="ticket-value" id="seatsDisplay">-</span>
+          </div>
+        </div>
+
+        <div class="ticket-section">
+          <div class="ticket-section-title">Add-ons</div>
+          <div class="ticket-row">
+            <span class="ticket-label">Snacks & Beverages</span>
+            <span class="ticket-value" id="snacksDisplay">-</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="barcode-section">
+        <div class="barcode-label">Scan to Verify</div>
+        <div class="barcode">||||||||||||</div>
+        <div class="booking-id">Booking ID: <span id="bookingId"></span></div>
+      </div>
+
+      <div class="ticket-section" style="padding: 0 25px;">
+        <div class="ticket-row">
+          <span class="ticket-label">Total Amount Paid</span>
+          <span class="ticket-value" id="totalDisplay" style="color: #667eea; font-size: 18px;">-</span>
+        </div>
+      </div>
+
+      <div class="ticket-footer">
+        Please arrive 15 minutes before the show time. Keep this ticket safe.
+      </div>
+    </div>
+
+    <div class="instructions">
+      <p><strong>📝 Important Instructions:</strong></p>
+      <p>✓ Arrive at least 15 minutes before the show</p>
+      <p>✓ Keep your ticket safe - you'll need it at entry</p>
+      <p>✓ Show this confirmation at the box office</p>
+      <p>✓ A confirmation email will be sent shortly</p>
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-print" onclick="window.print()">🖨️ Print Ticket</button>
+      <button class="btn btn-home" onclick="goHome()">🏠 Back to Home</button>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script src="js/ticket.js"></script>
+</body>
+</html>

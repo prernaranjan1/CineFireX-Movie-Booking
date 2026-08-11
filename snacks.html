@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Snacks - Movie Ticket Booking</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/snacks.css">
+</head>
+<body>
+  <header>
+    <h1>🍿 Combo Offers & Snacks</h1>
+  </header>
+
+  <div class="container">
+    <div class="booking-details">
+      <p><strong>Movie:</strong> <span id="movieDisplay"></span> | <strong>Time:</strong> <span id="timeDisplay"></span></p>
+      <p><strong>Seats:</strong> <span id="seatsDisplay"></span></p>
+      <p><strong>Ticket Total:</strong> ₹<span id="ticketTotalDisplay">0</span></p>
+    </div>
+
+    <div class="info-box">
+      👉 Enjoy delicious snacks while you watch! Pick your favorites and add them to your order.
+    </div>
+
+    <h2 class="section-title">Select Your Snacks</h2>
+
+    <div class="snacks-grid">
+      <div class="snack-card" data-name="Popcorn" data-price="120">
+        <div class="snack-icon">🍿</div>
+        <h3>Popcorn</h3>
+        <p>Butter & Salt</p>
+        <div class="price">₹120</div>
+        <input type="number" class="quantity-input" min="0" value="0" placeholder="Qty">
+      </div>
+
+      <div class="snack-card" data-name="Cold Drink" data-price="40">
+        <div class="snack-icon">🥤</div>
+        <h3>Cold Drink</h3>
+        <p>Large - 500ml</p>
+        <div class="price">₹40</div>
+        <input type="number" class="quantity-input" min="0" value="0" placeholder="Qty">
+      </div>
+
+      <div class="snack-card" data-name="Combo" data-price="150">
+        <div class="snack-icon">🎬</div>
+        <h3>Combo Pack</h3>
+        <p>Popcorn + Drink</p>
+        <div class="price">₹150</div>
+        <input type="number" class="quantity-input" min="0" value="0" placeholder="Qty">
+      </div>
+
+      <div class="snack-card" data-name="Nachos" data-price="80">
+        <div class="snack-icon">🌮</div>
+        <h3>Nachos</h3>
+        <p>Cheese & Jalapeño</p>
+        <div class="price">₹80</div>
+        <input type="number" class="quantity-input" min="0" value="0" placeholder="Qty">
+      </div>
+
+      <div class="snack-card" data-name="Candy" data-price="50">
+        <div class="snack-icon">🍬</div>
+        <h3>Candy Mix</h3>
+        <p>Assorted</p>
+        <div class="price">₹50</div>
+        <input type="number" class="quantity-input" min="0" value="0" placeholder="Qty">
+      </div>
+
+      <div class="snack-card" data-name="Hotdog" data-price="100">
+        <div class="snack-icon">🌭</div>
+        <h3>Hot Dog</h3>
+        <p>With Toppings</p>
+        <div class="price">₹100</div>
+        <input type="number" class="quantity-input" min="0" value="0" placeholder="Qty">
+      </div>
+    </div>
+
+    <div class="order-summary">
+      <div class="summary-title">Order Summary</div>
+      <div id="snacksList"></div>
+      <div class="summary-item total">
+        <span>Snacks Total:</span>
+        <span>₹<span id="snackTotal">0</span></span>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button type="button" class="btn btn-skip" onclick="SNACKS.skipSnacks()">Skip Snacks</button>
+      <button type="button" class="btn btn-proceed" onclick="SNACKS.proceedToPayment()">Proceed to Payment</button>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script src="js/snacks.js"></script>
+</body>
+</html>
