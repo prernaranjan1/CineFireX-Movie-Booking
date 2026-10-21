@@ -4,7 +4,7 @@
 
 const HOME = {
   config: {
-    API_KEY: "OMDb API key", // OMDb API key
+    API_KEY: "OMDb_API_key", // OMDb API key
     SEARCH_DELAY: 500,
     POPULAR_SEARCHES: ['Avengers'],
     NO_POSTER: 'data:image/svg+xml,' + encodeURIComponent(
