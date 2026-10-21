@@ -3,6 +3,8 @@
    ============================================ */
 
 const SNACKS = {
+  MAX_QTY: 20,
+
   state: {
     bookingData: {},
     selectedSnacks: {},
@@ -47,9 +49,9 @@ const SNACKS = {
       phone: params.get('phone') || '',
       movie: params.get('movie') || '',
       time: params.get('time') || '',
-      seats: params.get('seats') || '',
-      ticketTotal: parseInt(params.get('ticketTotal')) || 0
+      seats: params.get('seats') || ''
     };
+    this.state.bookingData.ticketTotal = Pricing.ticketTotal(this.state.bookingData.seats);
   },
 
   // Display booking information
@@ -73,7 +75,7 @@ const SNACKS = {
       card.addEventListener('click', (e) => {
         if (e.target === input) return;
         const currentQty = parseInt(input.value || 0);
-        input.value = currentQty + 1;
+        input.value = Math.min(currentQty + 1, this.MAX_QTY);
         this.updateSummary();
       });
     });
@@ -86,9 +88,14 @@ const SNACKS = {
     this.state.selectedSnacks = {};
 
     this.elements.snackCards.forEach(card => {
-      const qty = parseInt(card.querySelector('input').value) || 0;
+      const input = card.querySelector('input');
+      let qty = parseInt(input.value) || 0;
+      if (qty > this.MAX_QTY) {
+        qty = this.MAX_QTY;
+        input.value = qty;
+      }
       const name = card.dataset.name;
-      const price = parseInt(card.dataset.price);
+      const price = PRICES.SNACKS[name] || 0;
 
       if (qty > 0) {
         card.classList.add('selected');

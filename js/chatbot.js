@@ -2,6 +2,11 @@ const CHATBOT = {
 
     history: [],
 
+    // Must match MAX_HISTORY_TURNS in api/chat.js
+    MAX_HISTORY_TURNS: 10,
+
+    isSending: false,
+
     init() {
         this.createChatbot();
         this.bindEvents();
@@ -82,6 +87,7 @@ const CHATBOT = {
                     <input
                         type="text"
                         id="chatbot-input"
+                        maxlength="500"
                         placeholder="Ask about movies..."
                     />
 
@@ -162,7 +168,27 @@ const CHATBOT = {
     },
 
 
+    // Disable input while waiting so replies can't arrive out of order
+    setSending(sending) {
+
+        this.isSending = sending;
+
+        document.getElementById("chatbot-input").disabled = sending;
+        document.getElementById("chatbot-send").disabled = sending;
+
+        document
+            .querySelectorAll(".quick-btn")
+            .forEach(button => {
+                button.disabled = sending;
+            });
+    },
+
+
     async sendMessage(customMessage = null) {
+
+        if (this.isSending) {
+            return;
+        }
 
         const input =
             document.getElementById("chatbot-input");
@@ -173,6 +199,8 @@ const CHATBOT = {
         if (!message) {
             return;
         }
+
+        this.setSending(true);
 
 
         this.addMessage(
@@ -260,6 +288,9 @@ const CHATBOT = {
 
             });
 
+            this.history =
+                this.history.slice(-this.MAX_HISTORY_TURNS);
+
 
         } catch (error) {
 
@@ -268,9 +299,18 @@ const CHATBOT = {
             this.removeTyping(typingId);
 
             this.addMessage(
-                "Sorry, I'm having trouble connecting to the AI right now.",
+                error.message.startsWith("Too many") ||
+                error.message.startsWith("Message must")
+                    ? error.message
+                    : "Sorry, I'm having trouble connecting to the AI right now.",
                 "bot"
             );
+
+        } finally {
+
+            this.setSending(false);
+
+            input.focus();
         }
     },
 

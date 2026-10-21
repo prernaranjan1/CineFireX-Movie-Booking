@@ -4,9 +4,10 @@
 
 // URL Parameter handling
 const URLParams = {
+  // URLSearchParams already decodes values; decoding again breaks on '%'
   get: (param) => {
     const params = new URLSearchParams(window.location.search);
-    return params.get(param) ? decodeURIComponent(params.get(param)) : '';
+    return params.get(param) || '';
   },
 
   getAll: () => {
@@ -15,7 +16,7 @@ const URLParams = {
 
   set: (param, value) => {
     const params = new URLSearchParams(window.location.search);
-    params.set(param, encodeURIComponent(value));
+    params.set(param, value);
     return '?' + params.toString();
   },
 
@@ -28,6 +29,47 @@ const URLParams = {
       }
     }
     window.location.href = url + queryParams.join('&');
+  }
+};
+
+// Prices (single source of truth; totals are always recalculated from these)
+const PRICES = {
+  SEATS: {
+    'P': 250,  // Platinum
+    'G': 200,  // Gold
+    'S': 150   // Silver
+  },
+  SNACKS: {
+    'Popcorn': 120,
+    'Cold Drink': 40,
+    'Combo': 150,
+    'Nachos': 80,
+    'Candy': 50,
+    'Hotdog': 100
+  }
+};
+
+const Pricing = {
+  // "P1,G5" -> 450. Unknown or duplicate seats are ignored.
+  ticketTotal: (seats) => {
+    const unique = new Set(String(seats || '').split(',').map(s => s.trim()));
+    let total = 0;
+    unique.forEach(seat => {
+      if (/^[PGS]\d{1,2}$/.test(seat)) total += PRICES.SEATS[seat[0]];
+    });
+    return total;
+  },
+
+  // "Popcorn x2, Cold Drink x1" -> 280. Unknown snacks are ignored.
+  snackTotal: (snacks) => {
+    let total = 0;
+    String(snacks || '').split(',').forEach(item => {
+      const match = item.trim().match(/^(.+) x(\d{1,2})$/);
+      if (match && PRICES.SNACKS[match[1]]) {
+        total += PRICES.SNACKS[match[1]] * parseInt(match[2], 10);
+      }
+    });
+    return total;
   }
 };
 
@@ -50,7 +92,12 @@ const FormValidator = {
   },
 
   isValidExpiry: (expiry) => {
-    return /^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry);
+    if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) return false;
+
+    // Card is valid until the end of its expiry month
+    const [month, year] = expiry.split('/').map(Number);
+    const endOfMonth = new Date(2000 + year, month, 1);
+    return endOfMonth > new Date();
   },
 
   isValidCVV: (cvv) => {
@@ -172,6 +219,16 @@ const Utils = {
       style: 'currency',
       currency: 'INR'
     }).format(amount);
+  },
+
+  escapeHtml: (text) => {
+    if (text === null || text === undefined) return '';
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   },
 
   formatPrice: (price) => {
@@ -370,6 +427,8 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     URLParams,
+    PRICES,
+    Pricing,
     FormValidator,
     Storage,
     Alert,

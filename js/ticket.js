@@ -46,9 +46,11 @@ const TICKET = {
       movie: params.get('movie') || 'Not Selected',
       time: params.get('time') || 'Not Selected',
       seats: params.get('seats') || 'Not Selected',
-      snacks: params.get('snacks') || 'None',
-      total: params.get('total') || '0'
+      snacks: params.get('snacks') || 'None'
     };
+
+    const data = this.state.bookingData;
+    data.total = Pricing.ticketTotal(data.seats) + Pricing.snackTotal(data.snacks);
   },
 
   // Display ticket information
@@ -64,13 +66,33 @@ const TICKET = {
   },
 
   // Generate booking ID
+  // Reuse the ID on refresh so the same booking isn't saved twice
   generateBookingId() {
-    this.state.bookingId = Utils.generateBookingId();
+    const savedKey = 'ticket:' + window.location.search;
+    let savedId = null;
+
+    try {
+      savedId = sessionStorage.getItem(savedKey);
+    } catch (e) {
+      savedId = null;
+    }
+
+    this.state.isNewBooking = !savedId;
+    this.state.bookingId = savedId || Utils.generateBookingId();
+
+    try {
+      sessionStorage.setItem(savedKey, this.state.bookingId);
+    } catch (e) {
+      // Storage unavailable; booking is still shown
+    }
+
     this.elements.bookingIdDisplay.textContent = this.state.bookingId;
   },
 
   // Save booking to local storage
   saveBookingToStorage() {
+    if (!this.state.isNewBooking) return;
+
     const booking = {
       bookingId: this.state.bookingId,
       ...this.state.bookingData,
