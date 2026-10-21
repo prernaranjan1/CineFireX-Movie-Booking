@@ -63,11 +63,14 @@ const PAYMENT = {
       movie: params.get('movie') || '',
       time: params.get('time') || '',
       seats: params.get('seats') || '',
-      ticketTotal: parseInt(params.get('ticketTotal')) || 0,
-      snackTotal: parseInt(params.get('snackTotal')) || 0,
-      snacks: params.get('snacks') || 'None',
-      total: parseInt(params.get('total')) || 0
+      snacks: params.get('snacks') || 'None'
     };
+
+    // Recalculate totals so editing the URL can't change the price
+    const data = this.state.bookingData;
+    data.ticketTotal = Pricing.ticketTotal(data.seats);
+    data.snackTotal = Pricing.snackTotal(data.snacks);
+    data.total = data.ticketTotal + data.snackTotal;
   },
 
   // Display booking information
@@ -95,9 +98,10 @@ const PAYMENT = {
     });
 
     // Expiry - auto format MM/YY
+    // Only add the slash once the year starts, so backspace can remove it
     this.elements.expiry.addEventListener('input', (e) => {
       let value = e.target.value.replace(/[^0-9]/g, '');
-      if (value.length >= 2) {
+      if (value.length > 2) {
         value = value.substring(0, 2) + '/' + value.substring(2, 4);
       }
       e.target.value = value;
@@ -139,7 +143,7 @@ const PAYMENT = {
 
     // Validate expiry
     if (!FormValidator.isValidExpiry(this.elements.expiry.value)) {
-      this.setFieldError(this.elements.expiry, 'Invalid format. Use MM/YY');
+      this.setFieldError(this.elements.expiry, 'Enter a valid, unexpired date (MM/YY)');
       isValid = false;
     } else {
       this.clearFieldError(this.elements.expiry);

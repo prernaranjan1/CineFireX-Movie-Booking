@@ -4,11 +4,7 @@
 
 const BOOKING = {
   config: {
-    SEAT_PRICES: {
-      'P': 250,  // Platinum
-      'G': 200,  // Gold
-      'S': 150   // Silver
-    }
+    SEAT_PRICES: PRICES.SEATS
   },
 
   state: {

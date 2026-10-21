@@ -9,6 +9,70 @@ if (dotenv) {
     dotenv.config();
 }
 
+const MAX_MESSAGE_LENGTH = 500;
+const MAX_HISTORY_TURNS = 10;
+const MAX_HISTORY_TEXT_LENGTH = 2000;
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 15;
+
+// Simple per-IP limiter. On serverless hosts each instance keeps its own
+// counts, so this is best effort; it still stops one client hammering an instance.
+const requestLog = new Map();
+
+function isRateLimited(ip) {
+    const now = Date.now();
+    const recent = (requestLog.get(ip) || []).filter(
+        (time) => now - time < RATE_LIMIT_WINDOW_MS
+    );
+
+    recent.push(now);
+    requestLog.set(ip, recent);
+
+    // Drop idle entries so the map doesn't grow forever
+    if (requestLog.size > 1000) {
+        for (const [key, times] of requestLog) {
+            if (times.every((time) => now - time >= RATE_LIMIT_WINDOW_MS)) {
+                requestLog.delete(key);
+            }
+        }
+    }
+
+    return recent.length > RATE_LIMIT_MAX_REQUESTS;
+}
+
+function getClientIp(req) {
+    const forwarded = req.headers["x-forwarded-for"];
+    if (forwarded) {
+        return String(forwarded).split(",")[0].trim();
+    }
+    return req.socket?.remoteAddress || "unknown";
+}
+
+// Keep only well-formed user/model text turns from the client's history,
+// so callers can't send huge payloads or arbitrary request fields.
+function cleanHistory(history) {
+    if (!Array.isArray(history)) {
+        return [];
+    }
+
+    return history
+        .filter((turn) =>
+            turn &&
+            (turn.role === "user" || turn.role === "model") &&
+            Array.isArray(turn.parts) &&
+            typeof turn.parts[0]?.text === "string"
+        )
+        .slice(-MAX_HISTORY_TURNS)
+        .map((turn) => ({
+            role: turn.role,
+            parts: [
+                {
+                    text: turn.parts[0].text.slice(0, MAX_HISTORY_TEXT_LENGTH)
+                }
+            ]
+        }));
+}
+
 module.exports = async function handler(req, res) {
     if (req.method !== "POST") {
         return res.status(405).json({
@@ -17,11 +81,23 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-        const { message, history = [] } = req.body;
+        if (isRateLimited(getClientIp(req))) {
+            return res.status(429).json({
+                error: "Too many messages. Please wait a minute and try again."
+            });
+        }
 
-        if (!message || !message.trim()) {
+        const { message, history } = req.body || {};
+
+        if (typeof message !== "string" || !message.trim()) {
             return res.status(400).json({
                 error: "Message is required"
+            });
+        }
+
+        if (message.length > MAX_MESSAGE_LENGTH) {
+            return res.status(400).json({
+                error: `Message must be ${MAX_MESSAGE_LENGTH} characters or less`
             });
         }
 
@@ -34,7 +110,7 @@ module.exports = async function handler(req, res) {
         }
 
         const contents = [
-            ...history,
+            ...cleanHistory(history),
             {
                 role: "user",
                 parts: [
